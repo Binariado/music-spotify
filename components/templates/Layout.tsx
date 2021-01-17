@@ -1,13 +1,17 @@
 import React, {ReactNode} from 'react'
 import Head from 'next/head'
+import styled from 'styled-components'
 
 type Props = {
   children?: ReactNode,
   title?: String,
 }
 
-const Layout = ({ children, title = 'Music spotify'}: Props) => (
-  <div>
+const Layout = styled.div`
+`;
+
+const LayoutComponent = ({ children, title = 'Music spotify'}: Props) => (
+  <Layout className="bg-primary">
     <Head>
         <title>{title}</title>
         <meta charSet="utf-8" />
@@ -15,11 +19,11 @@ const Layout = ({ children, title = 'Music spotify'}: Props) => (
         <link rel="icon" href="/favicon.ico" />
     </Head>
     {children}
-    <footer>
+    {/* <footer>
       <hr />
       <span></span>
-    </footer>
-  </div>
+    </footer> */}
+  </Layout>
 );
 
-export default Layout
+export default LayoutComponent
