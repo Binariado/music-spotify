@@ -8,9 +8,11 @@ import { IconButton, Tooltip, Slider } from '@material-ui/core'
 import styled from 'styled-components'
 
 const TimeSlider = styled(Slider)`
-  color: #2BB954 !important;
   .MuiSlider-rail{
     background-color: #ECECEC !important;
+  }
+  .MuiSlider-track{
+    color: #2BB954 !important;
   }
   .MuiSlider-thumb{
     background-color: #2BB954 !important;
@@ -35,6 +37,7 @@ const ValueLabelComponent = ({ children, open, value, className }: PropsTolip) =
 
 const PlayerControls = styled.div`
 `;
+
 
 const PlayerControlsComponent = ({ }) => (
   <PlayerControls className="flex items-center flex-grow justify-around ">

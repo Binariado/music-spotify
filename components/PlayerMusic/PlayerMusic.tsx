@@ -30,8 +30,8 @@ const CardDisc = styled.div`
 
 `
 
-const PlayerMusicComponent = ({ }) => (
-  <div className=" bg-white">
+const PlayerMusicComponent = (props) => (
+  <div className="bg-white">
     <PlayerMusic className="container mx-auto p-2 flex items-center justify-around">
       <CardDisc className="flex items-center mx-3">
         <Avatar

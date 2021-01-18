@@ -2,7 +2,7 @@ import React from 'react'
 import styled from "styled-components"
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile';
-import CardMusic, { titlePosition, borderStyle } from './CardMusic'
+import CardSearch, { titlePosition, borderStyle } from './CardMusic'
 
 type TitlePorps = {
   albun?: string,
@@ -93,32 +93,85 @@ const Albumnes = [
     albun: "Insecure",
     pista: "Love in air",
     src: "https://f4.bcbits.com/img/0016073391_10.jpg"
+  },
+  {
+    albun: "Insecure",
+    pista: "Love in air",
+    src: "https://i.pinimg.com/originals/da/18/3e/da183e46c3de1eaefa4f6705ca9a50dd.jpg"
+  },
+  {
+    albun: "Insecure",
+    pista: "Love in air",
+    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
+  },
+  {
+    albun: "Insecure",
+    pista: "Love in air",
+    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
+  },
+  {
+    albun: "Insecure",
+    pista: "Love in air",
+    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
+  },
+  {
+    albun: "Insecure",
+    pista: "Love in air",
+    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
+  },
+  {
+    albun: "Insecure",
+    pista: "Love in air",
+    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
+  },
+  {
+    albun: "Insecure",
+    pista: "Love in air",
+    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
+  },
+  {
+    albun: "Insecure",
+    pista: "Love in air",
+    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
+  },
+  {
+    albun: "Insecure",
+    pista: "Love in air",
+    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
+  },
+  {
+    albun: "Insecure",
+    pista: "Love in air",
+    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
+  },
+  {
+    albun: "Insecure",
+    pista: "Love in air",
+    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
   }
 ]
 
-const CollectionMusic = styled.div`
+const SearchMusic = styled.div`
+  width: 90%;
 `
 
-const CollectionMusicComponent = () => (
-  <CollectionMusic className="p-4">
-    <p className="text-xl text-title uppercase mb-3">Colección</p>
-    <GroupCollec className="flex " cols={2.5}>
-      {Albumnes.map((items, idx) => (
-        <li key={idx} className="">
-          <CardMusic
-            position={titlePosition.BOTTOM}
-            borderStyle={borderStyle.ROUNDEDFULL}
-            size={"4rem"}
-            src={items.src}
-            className="p-4 hover:shadow-lg cursor-pointer"
-            childrenAvatar={(<Halo className="hole bg-white rounded-full "></Halo>)}
-            alt={""}>
-            <TitleAlbum albun={items.albun} pista={items.pista} />
-          </CardMusic>
-        </li>
-      ))}
-    </GroupCollec>
-  </CollectionMusic>
+const CollectionCardSearch = () => (
+  <SearchMusic className="p-4 flex flex-wrap">
+    {Albumnes.map((items, idx) => (
+      <div  key={idx} className="p-4">
+        <CardSearch
+          position={titlePosition.BOTTOM}
+          //borderStyle={borderStyle.ROUNDED}
+          size={["10rem", "10rem"]}
+          src={items.src}
+          className="hover:shadow-lg cursor-pointer"
+          // childrenAvatar={(<Halo className="hole bg-white rounded-full "></Halo>)}
+          alt={""}>
+          <TitleAlbum albun={items.albun} pista={items.pista} />
+        </CardSearch>
+      </div>
+    ))}
+  </SearchMusic>
 )
 
-export default CollectionMusicComponent
+export default CollectionCardSearch
