@@ -1,0 +1,7 @@
+export const TRACK = "TRACK"
+export const ARTISTS = "ARTISTS"
+export const TRACK_ARTISTS = "TRACK_ARTISTS"
+export const FEATURED = "FEATURED"
+export const MUSICALL = "MUSICALL"
+export const SELECTPLAYER = "SELECTPLAYER"
+export const LOADING = "LOADING"

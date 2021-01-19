@@ -1,8 +1,13 @@
-import React from 'react'
-import styled from "styled-components"
+import React, { useState, useEffect } from 'react'
+import styled, { css } from "styled-components"
+import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile';
 import CardSearch, { titlePosition, borderStyle } from './CardMusic'
+import {
+  selectPlayer
+} from '../state/playerReducer/player.actions'
 
 type TitlePorps = {
   albun?: string,
@@ -38,140 +43,74 @@ const Halo = styled.div`
   width: calc(100% / 6);
   position: absolute;
 `
-const Albumnes = [
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://i.pinimg.com/originals/da/18/3e/da183e46c3de1eaefa4f6705ca9a50dd.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://i.pinimg.com/originals/da/18/3e/da183e46c3de1eaefa4f6705ca9a50dd.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  },
-  {
-    albun: "Insecure",
-    pista: "Love in air",
-    src: "https://f4.bcbits.com/img/0016073391_10.jpg"
-  }
-]
 
 const SearchMusic = styled.div`
-  width: 90%;
+  column-count: 3;
+  column-gap: 15px;
 `
 
-const CollectionCardSearch = () => (
-  <SearchMusic className="p-4 flex flex-wrap">
-    {Albumnes.map((items, idx) => (
-      <div  key={idx} className="p-4">
-        <CardSearch
-          position={titlePosition.BOTTOM}
-          //borderStyle={borderStyle.ROUNDED}
-          size={["10rem", "10rem"]}
-          src={items.src}
-          className="hover:shadow-lg cursor-pointer"
-          // childrenAvatar={(<Halo className="hole bg-white rounded-full "></Halo>)}
-          alt={""}>
-          <TitleAlbum albun={items.albun} pista={items.pista} />
-        </CardSearch>
-      </div>
-    ))}
-  </SearchMusic>
-)
+const ItemCard = styled.div`
 
-export default CollectionCardSearch
+`
+
+const ImgCard = ({ src, name }) => {
+
+  const [imgSrc, setImgSrc] = useState('/images/default-album-art.png');
+  const Img = new Image();
+  Img.src = src;
+  Img.onload = () => {
+    setImgSrc(src);
+  }
+  return (
+    <img alt={name} src={imgSrc} width="" height="" />
+  )
+}
+
+type PropsImg = {
+  album?:{
+    images?: {
+      url?: object[],
+    },
+  },
+}
+
+const CollectionCardSearch = ({ tracks, artists, dispatch }) => {
+  const { items } = tracks;
+
+  const selectPlay = (item) => {
+    dispatch(selectPlayer(item));
+  }
+
+  return (
+    <SearchMusic className="p-4 flex flex-grow flex-wrap">
+      {items.map((item, idx) => {
+        const { album }: PropsImg = item;
+        let images = false;
+        if (Object.prototype.hasOwnProperty.call(album, 'images')) {
+          let images = true;
+        }
+        return (
+          <ItemCard
+            onClick={() => selectPlay(item)}
+            key={idx}
+            className="p-4 flex-grow">
+            <CardSearch
+              position={titlePosition.BOTTOM}
+              //borderStyle={borderStyle.ROUNDED}
+              size={["10rem", "10rem"]}
+              className="hover:shadow-lg cursor-pointer"
+              childrenAvatar={(<>
+                <ImgCard src={album.images[0].url} name={item.name} />
+                {/* <Halo className="hole bg-white rounded-full "></Halo> */}
+              </>)}
+              alt={""}>
+              <TitleAlbum albun={item.album.name} pista={item.name} />
+            </CardSearch>
+          </ItemCard>
+        )
+      })}
+    </SearchMusic>
+  )
+}
+
+export default connect(state => state.music)(CollectionCardSearch)

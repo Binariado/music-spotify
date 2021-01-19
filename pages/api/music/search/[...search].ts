@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-var express = require('express'); // Express web server framework
-var request = require('request'); // "Request" library
+var express = require('express'); 
+var request = require('request'); 
 var cors = require('cors');
 var querystring = require('querystring');
-var cookieParser = require('cookie-parser');
 
 export default (_req: NextApiRequest, res: NextApiResponse) => {
 
@@ -13,17 +12,23 @@ export default (_req: NextApiRequest, res: NextApiResponse) => {
       query: { search },
     } = _req
 
+    let urlApi = `https://api.spotify.com/v1/search?${querystring.stringify({
+      q: search[0],
+      type: 'track,artist',
+      market: 'ES',
+      limit: 20,
+      offset: 5,
+    })
+      }`;
+
+    if(search[2]){
+      urlApi = search[2];
+    }
+
     var authOptions = {
-      url: `https://api.spotify.com/v1/search?${querystring.stringify({
-        q: search,
-        type: 'track,artist',
-        market: 'ES',
-        limit: 10,
-        offset: 5,
-      })
-        }`,
+      url: urlApi,
       headers: {
-        'Authorization': 'Bearer ' + 'BQAOInZGkcf-knaBXae4aEZnSwsIbVgsLgTAY5MZKY9F0aj5t8cGmYy01UVX2EY_kx8INK8nwB1ZiGyyOA9cYAQPIKpOMqgOb6iRH6REMTZds-ZTh5WV2rZwNSukOOzgbLlCG-wKMojOysxeX5qXJ9cYjCCxKHEgtoRtWcHmXXJRViguNQ',
+        'Authorization': 'Bearer ' + search[1],
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },

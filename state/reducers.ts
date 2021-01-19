@@ -2,24 +2,22 @@
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-// import authReducer from './authReducer/auth.reducers';
 import tokenReducer from './tokenReducer/token.reducers';
-
+import musicReducer from './musicReducer/music.reducers';
+import errorReducer from './errorReducer/error.reducers';
+import playerReducer from './playerReducer/player.reducers';
+// 
 const rootPersistConfig = {
   key: 'root',
   storage: storage,
   blacklist: ['somethingTemporary']
 }
 
-// const authPersistConfig = {
-//   key: 'auth',
-//   storage: storage,
-//   blacklist: ['somethingTemporary']
-// }
-
 const rootReducer = combineReducers({
-  // auth: persistReducer(authPersistConfig, authReducer),
-  token: tokenReducer
+  token: tokenReducer,
+  music: musicReducer,
+  error: errorReducer,
+  player: playerReducer,
 })
 
 export const combinedReducers = persistReducer(rootPersistConfig, rootReducer);

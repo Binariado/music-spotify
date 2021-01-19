@@ -1,17 +1,18 @@
 import {
-  AUTHENTICATED,
-  INCREMENT_COUNTER
-} from './auth.types';
+  ERROR
+} from './error.types';
 
 const INITIAL_STATE = {
-  isAuthenticated: false
+  error: {}
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case AUTHENTICATED:
+    case ERROR:
+      const stateError = state.error;
       return {
-        ...action.payload
+        ...stateError,
+        ...action.payload,
       };
     default: return state;
   }

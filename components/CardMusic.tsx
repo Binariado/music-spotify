@@ -1,5 +1,4 @@
-import React, { ReactNode } from 'react'
-import Image from 'next/image'
+import React, { ReactNode, useState } from 'react'
 
 import styled from 'styled-components'
 
@@ -35,13 +34,12 @@ const Halo = styled.div`
   position: absolute;
 `
 
-const NodeAvatar = ({ childrenAvatar, size, alt, src, borderStyle }: PropsCard) => {
+const NodeAvatar = ({ childrenAvatar, size, borderStyle }: PropsCard) => {
 
   return (
     <Avatar
       size={size instanceof Array? size: [size, size]}
       className={`flex items-center justify-center ${borderStyle}`}>
-      <img className={borderStyle} alt={alt} src={src} width="" height="" />
       {childrenAvatar}
     </Avatar>
   )

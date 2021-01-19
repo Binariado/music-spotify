@@ -1,17 +1,17 @@
 import {
-  AUTHENTICATED,
-  INCREMENT_COUNTER
-} from './auth.types';
+  SELECTPLAYER,
+} from './player.types';
 
 const INITIAL_STATE = {
-  isAuthenticated: false
+  selectPlayer: null,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case AUTHENTICATED:
+    case SELECTPLAYER:
       return {
-        ...action.payload
+        ...state,
+        selectPlayer: action.payload
       };
     default: return state;
   }

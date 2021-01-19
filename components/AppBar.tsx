@@ -1,8 +1,12 @@
 import React, { ReactNode } from 'react'
-import Avatar from '@material-ui/core/Avatar'
+import { useSelector, useDispatch } from "react-redux";
 import SearchIcon from '@material-ui/icons/Search'
 import styled from 'styled-components';
 import { useDebounce, useForm } from '../hooks';
+import { useApiRest } from '../helpers';
+import { MUSIC_ALL } from '../state/musicReducer/music.actions'
+import { SET_ERROR } from '../state/errorReducer/error.actions'
+/// 
 
 const Header = styled.header`
   display: flex;
@@ -11,62 +15,81 @@ const Header = styled.header`
 `;
 
 const Input = styled.input.attrs(props => ({
-  // we can define static props
-  type: "text",
+  type: props.type || "text",
 
-  // or we can define dynamic ones
-  size: props.size || "1em",
 }))`
-  color: palevioletred;
-  font-size: 1em;
-  border: solid 0px transparent;
-  border-radius: 3px;
-  /* here we use the dynamically computed prop */
-  margin: ${props => props.size};
-  padding: ${props => props.size};
+
 `;
 
 const AppBar = () => {
-
+  const dispatch = useDispatch();
+  const { search } = useApiRest("search");
   const [formValue, handleInput, handleInputReset] = useForm({
     "searchMusic": "",
   });
 
+  const token = useSelector(state => state.token);
+
   const [handleSearch, cancelDebounce] = useDebounce({
     callback: async (sear) => {
-      console.log(sear)
+      try {
+        if (sear === '') cancelDebounce();
+        const resp = await search({ search: sear, ...token });
+        if (resp) {
+          const { errors } = resp;
+          if (!errors) {
+            dispatch(MUSIC_ALL({ ...resp.search }));
+          }
+          return
+        }
+        
+        if(sear !== ''){
+          dispatch(SET_ERROR({
+            errorSearch: {
+              title: "Error al buscar",
+              description: "Verificar tu conexión a internet o refresca el navegador",
+              src: "/images/404.jpg"
+            }
+          }))
+        }
+
+      } catch (error) {
+        console.log("search error", error);
+        dispatch(SET_ERROR({
+          errorSearch: {
+            title: "oH!",
+            description: "Al parecer fue un error al momento de buscar",
+            src: "/images/404.jpg"
+          }
+        }))
+      }
     },
     wait: 1000
   })
 
-
   const _handleSearch = (e) => {
     handleInput(e);
-    handleSearch(e.target.value);
+    handleSearch(e.target.value, search);
   }
 
   return (
     <Header className="p-4">
       <div className="flex-grow flex">
         <div className="flex items-stretch">
-          <label className="row-span-2 flex items-center">
-            <SearchIcon />
-          </label>
-          <div className="col-span-2 ml-1 p-1 flex items-center">
-            <Input 
-            name="searchMusic" 
-            placeholder="buscar canciones"
-            className="bg-gray-200 focus:bg-white" 
-            onChange={(e) => _handleSearch(e)}
-            size="0.2rem"
-            value={formValue.searchMusic}
-            type="text"/>
+          <div className="relative">
+            <div className="absolute top-4 left-3">
+              <SearchIcon className="fa fa-search text-gray-400 z-20 hover:text-gray-500" />
+            </div>
+            <Input
+              name="searchMusic"
+              placeholder="buscar canciones"
+              className="h-14 w-96 pl-10 pr-20 rounded-lg z-0 focus:shadow focus:outline-none"
+              onChange={(e) => _handleSearch(e)}
+              size="0.2rem"
+              value={formValue.searchMusic}
+              type="text" />
           </div>
         </div>
-      </div>
-
-      <div className="cursor-pointer">
-        <Avatar className="shadow-lg" alt="Remy Sharp" src="https://cnet1.cbsistatic.com/img/WfkqAocgYhb8A85smYcTH_acFa8=/1200x630/2019/01/11/b251bf04-5bf8-469a-be8d-79489551460b/avatar-2009.jpg" />
       </div>
     </Header>
   );
