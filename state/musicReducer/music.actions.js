@@ -60,15 +60,14 @@ export const featured = (payload) => {
 };
 
 export function clearErros() {
-  return (dispatch, getState) => {
-    // apiRest
+  return (dispatch) => {
+
     dispatch(SET_ERROR({ error: {} }));
   };
 }
 
 export function paginate_search(data) {
   return (dispatch, getState) => {
-    //console.log(getState, data);
     dispatch(MUSIC_ALL({
       tracks: {
         items: [],

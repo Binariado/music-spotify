@@ -10,7 +10,7 @@ export const SET_ERROR = (payload) => {
 };
 
 export function clearErros() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(SET_ERROR({error:{}}));
   };
 }

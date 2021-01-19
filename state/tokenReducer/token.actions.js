@@ -12,7 +12,7 @@ export const get_token = (payload) => {
 };
 
 export function getTokenAsync() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(get_token(null));
     const { getToken } = useApiRest("getToken");
 
