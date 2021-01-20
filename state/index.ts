@@ -1,10 +1,12 @@
-import { Env } from "../utils"
+import { Env } from "../utils";
+import StoreDev from './store.dev';
+import StoreProd from './store.dev';
 
 const configureStoreComponent = (() => {
   if (Env.NODE_ENV === "production") {
-    return require("./store.prod")
+    return StoreProd
   }
-  return require("./store.dev")
+  return StoreDev
 })()
 
 export const configureStore = configureStoreComponent
