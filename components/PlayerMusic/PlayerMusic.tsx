@@ -39,6 +39,7 @@ const PlayerMusicComponent = (props) => {
     const n = music.tracks.items.length;
     const item = music.tracks.items[_.random(n)];
     if (n > 0) {
+      console.log(n);
       dispatch(selectPlayer(item));
     }
   }, [])

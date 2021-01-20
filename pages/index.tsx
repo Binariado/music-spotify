@@ -50,21 +50,13 @@ export default function Home() {
     dispatch(clearErros());
   }, []);
 
-  
-
   useEffect(() => {
     if (token.token && stateInit) {
+      console.log(token);
       dispatch(paginate_search({ search: 'p', token: token.token }));
-      
+      setStateInit(false)
     }
-    return () => setStateInit(false);;
   }, [token, stateInit]);
-
-  // useEffect(() => {
-  //   console.log(music.tracks)
-  // }, [music])
-
-  // console.log(music.selectPlayer);
 
   return (
     <Layout title={"Music-spotify"}>

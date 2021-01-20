@@ -68,14 +68,14 @@ export function clearErros() {
 
 export function paginate_search(data) {
   return (dispatch, getState) => {
-    dispatch(MUSIC_ALL({
-      tracks: {
-        items: [],
-      },
-      artists: {
-        items: [],
-      }
-    }));
+    // dispatch(MUSIC_ALL({
+    //   tracks: {
+    //     items: [],
+    //   },
+    //   artists: {
+    //     items: [],
+    //   }
+    // }));
     const { music, token } = getState();
     try {
       const _paginate = async () => {
