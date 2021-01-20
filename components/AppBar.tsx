@@ -42,7 +42,7 @@ const AppBar = () => {
           }
           return
         }
-        
+
         if(sear !== ''){
           dispatch(SET_ERROR({
             errorSearch: {
@@ -82,6 +82,7 @@ const AppBar = () => {
             </div>
             <Input
               name="searchMusic"
+              id="searchMusic"
               placeholder="buscar canciones"
               className="h-14 w-96 pl-10 pr-20 rounded-lg z-0 focus:shadow focus:outline-none"
               onChange={(e) => _handleSearch(e)}

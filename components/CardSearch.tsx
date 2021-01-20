@@ -93,7 +93,7 @@ const CollectionCardSearch = ({ tracks, artists, dispatch }) => {
           <ItemCard
             onClick={() => selectPlay(item)}
             key={idx}
-            className="p-4 flex-grow">
+            className="item-card-music p-4 flex-grow">
             <CardSearch
               position={titlePosition.BOTTOM}
               //borderStyle={borderStyle.ROUNDED}
